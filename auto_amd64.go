@@ -11,22 +11,24 @@ import (
 	"unsafe"
 )
 
-// ComtrueAPICode
-type APICode int32
-
-const (
-	ApiOk              = 0x0
-	ApiInitFail        = 0x1
-	ApiJsonLoadFail    = 0x2
-	ApiFail            = 0x3
-	ApiDetectSqureFail = 0x4
-	ApiDetectTextFail  = 0x5
-	ApiOcrFail         = 0x6
-	ApiImageLoadFail   = 0x7
-)
-
 // ComtrueAPI_RETURN
 type ApiReturn uint32
+
+const (
+	ONNX_EXCEPTION                = 100
+	STD_EXCEPTION                 = 101
+	CV_EXCEPTION                  = 102
+	OK                            = 200
+	CAN_NOT_FIND_TEXT             = 201
+	CAN_NOT_FIND_VERTEX           = 202
+	CAN_NOT_FIND_SQUARE           = 203
+	NOT_ENOUGH_TO_BE_SQUARE       = 204
+	IMAGE_CANNOT_BE_READ          = 400
+	IMAGE_IS_EMPTY                = 401
+	IMAGE_IS_TOO_SMALL_TO_PROCESS = 402
+	IMAGE_PATH_NOT_VALID          = 501
+	DATA_VALIDATION_FAIL          = 502
+)
 
 // ComtrueInitFromFile
 func InitFromFile(cornerV1 string, cornerV2 string, textModel string, ocrModel string, dcodeModel string) (ret ApiReturn) {
@@ -46,33 +48,36 @@ func InitFromFile(cornerV1 string, cornerV2 string, textModel string, ocrModel s
 }
 
 // Comtrue_extract_text
-func ExtractText(data uintptr, dataLength int) (jsonOutLength int, ret string) {
+func ExtractText(data uintptr, dataLength int) (retCode int, ret string, jsonOutLength int) {
 	_data := unsafe.Pointer(data)
 	_dataLength := C.int64_t(dataLength)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
-	_ret := C.Comtrue_extract_text(_data, _dataLength, _jsonOutLength)
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_extract_text(_data, _dataLength, _jsonOutLength, _retCode)
 	ret = C.GoString(_ret)
 	return
 }
 
 // Comtrue_identification
-func Identification(data uintptr, dataLength int, idType string) (jsonOutLength int, ret string) {
+func Identification(data uintptr, dataLength int, idType string) (retCode int, ret string, jsonOutLength int) {
 	_data := unsafe.Pointer(data)
 	_dataLength := C.int64_t(dataLength)
 	_idType := C.CString(idType)
 	defer C.free(unsafe.Pointer(_idType))
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
-	_ret := C.Comtrue_identification(_data, _dataLength, _idType, _jsonOutLength)
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_identification(_data, _dataLength, _idType, _jsonOutLength, _retCode)
 	ret = C.GoString(_ret)
 	return
 }
 
 // Comtrue_identification_extract_text
-func IdentificationExtractText(data uintptr, dataLength int) (jsonOutLength int, ret string) {
+func IdentificationExtractText(data uintptr, dataLength int) (retCode int, ret string, jsonOutLength int) {
 	_data := unsafe.Pointer(data)
 	_dataLength := C.int64_t(dataLength)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
-	_ret := C.Comtrue_identification_extract_text(_data, _dataLength, _jsonOutLength)
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_identification_extract_text(_data, _dataLength, _jsonOutLength, _retCode)
 	ret = C.GoString(_ret)
 	return
 }

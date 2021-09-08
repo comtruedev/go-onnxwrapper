@@ -14,6 +14,12 @@ import (
 // ComtrueAPI_RETURN
 type ApiReturn uint32
 
+const (
+	DOCUMENT_CLASSIFICATION_OCR_DEFAULT = 0
+	DOCUMENT_CLASSIFICATION_OCR_LIGHT   = 1
+	DOCUMENT_CLASSIFICATION_OCR_ALT     = 2
+)
+
 // ErrorCode.h
 const (
 	OK                            = 0
@@ -122,7 +128,7 @@ func DocumentClassification(data uintptr, dataLength int) (retCode int, ret stri
 	_dataLength := C.int64_t(dataLength)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_document_classification(_data, _dataLength, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_document_classification(_data, _dataLength, _jsonOutLength, _retCode, DOCUMENT_CLASSIFICATION_OCR_DEFAULT)
 	ret = C.GoString(_ret)
 	return
 }

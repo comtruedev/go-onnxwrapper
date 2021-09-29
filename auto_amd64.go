@@ -72,6 +72,7 @@ func ExtractText(data uintptr, dataLength int) (retCode int, ret string, jsonOut
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
 	_ret := C.Comtrue_extract_text(_data, _dataLength, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
 }
@@ -85,6 +86,7 @@ func Identification(data uintptr, dataLength int, idType string) (retCode int, r
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
 	_ret := C.Comtrue_identification(_data, _dataLength, _idType, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
 }
@@ -96,6 +98,7 @@ func IdentificationExtractText(data uintptr, dataLength int) (retCode int, ret s
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
 	_ret := C.Comtrue_identification_extract_text(_data, _dataLength, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
 }
@@ -107,6 +110,7 @@ func FaceDetection(data uintptr, dataLength int) (retCode int, ret string, jsonO
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
 	_ret := C.Comtrue_face_detection(_data, _dataLength, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
 }
@@ -118,6 +122,7 @@ func LicensePlateDetection(data uintptr, dataLength int) (retCode int, ret strin
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
 	_ret := C.Comtrue_license_plate_detection(_data, _dataLength, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
 }
@@ -130,6 +135,7 @@ func DocumentClassification(data uintptr, dataLength int) (retCode int, ret stri
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
 	_ocrType := C.int32_t(DOCUMENT_CLASSIFICATION_OCR_DEFAULT)
 	_ret := C.Comtrue_document_classification(_data, _dataLength, _jsonOutLength, _retCode, _ocrType)
+	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
 }

@@ -66,75 +66,69 @@ func CheckModelInitState() int {
 }
 
 // Comtrue_extract_text
-func ExtractText(data uintptr, dataLength int) (retCode int, ret string, jsonOutLength int) {
-	_data := unsafe.Pointer(data)
+func ExtractText(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
 	_dataLength := C.int64_t(dataLength)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_extract_text(_data, _dataLength, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_extract_text(data, _dataLength, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
 }
 
 // Comtrue_identification
-func Identification(data uintptr, dataLength int, idType string) (retCode int, ret string, jsonOutLength int) {
-	_data := unsafe.Pointer(data)
+func Identification(data unsafe.Pointer, dataLength int, idType string) (retCode int, ret string, jsonOutLength int) {
 	_dataLength := C.int64_t(dataLength)
 	_idType := C.CString(idType)
 	defer C.free(unsafe.Pointer(_idType))
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_identification(_data, _dataLength, _idType, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_identification(data, _dataLength, _idType, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
 }
 
 // Comtrue_identification_extract_text
-func IdentificationExtractText(data uintptr, dataLength int) (retCode int, ret string, jsonOutLength int) {
-	_data := unsafe.Pointer(data)
+func IdentificationExtractText(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
 	_dataLength := C.int64_t(dataLength)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_identification_extract_text(_data, _dataLength, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_identification_extract_text(data, _dataLength, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
 }
 
 // Comtrue_face_detection
-func FaceDetection(data uintptr, dataLength int) (retCode int, ret string, jsonOutLength int) {
-	_data := unsafe.Pointer(data)
+func FaceDetection(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
 	_dataLength := C.int64_t(dataLength)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_face_detection(_data, _dataLength, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_face_detection(data, _dataLength, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
 }
 
 // Comtrue_license_plate_detection
-func LicensePlateDetection(data uintptr, dataLength int) (retCode int, ret string, jsonOutLength int) {
-	_data := unsafe.Pointer(data)
+func LicensePlateDetection(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
 	_dataLength := C.int64_t(dataLength)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_license_plate_detection(_data, _dataLength, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_license_plate_detection(data, _dataLength, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
 }
 
 // Comtrue_document_classification
-func DocumentClassification(data uintptr, dataLength int) (retCode int, ret string, jsonOutLength int) {
-	_data := unsafe.Pointer(data)
+func DocumentClassification(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
 	_dataLength := C.int64_t(dataLength)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
 	_ocrType := C.int32_t(DOCUMENT_CLASSIFICATION_OCR_DEFAULT)
-	_ret := C.Comtrue_document_classification(_data, _dataLength, _jsonOutLength, _retCode, _ocrType)
+	_ret := C.Comtrue_document_classification(data, _dataLength, _jsonOutLength, _retCode, _ocrType)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return

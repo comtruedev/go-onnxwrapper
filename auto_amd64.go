@@ -30,6 +30,7 @@ const (
 	INVALID_INIT_KEY              = 104
 	MODEL_INIT_FAIL               = 105
 	MODEL_NOT_INITIALIZED         = 106
+	INVALID_ID_TYPE               = 107
 	CAN_NOT_FIND_TEXT             = 201
 	CAN_NOT_FIND_VERTEX           = 202
 	CAN_NOT_FIND_SQUARE           = 203
@@ -129,6 +130,30 @@ func DocumentClassification(data unsafe.Pointer, dataLength int) (retCode int, r
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
 	_ocrType := C.int32_t(DOCUMENT_CLASSIFICATION_OCR_DEFAULT)
 	_ret := C.Comtrue_document_classification(data, _dataLength, _jsonOutLength, _retCode, _ocrType)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}
+
+// Comtrue_id_liveness
+func IDLiveness(data unsafe.Pointer, dataLength int, idType int) (retCode int, ret string, jsonOutLength int) {
+	_dataLength := C.int64_t(dataLength)
+	_idType := C.int32_t(idType)
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_id_liveness(data, _dataLength, _idType, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}
+
+// Comtrue_face_similarity
+func FaceSimilarity(data1 unsafe.Pointer, data1Length int, data2 unsafe.Pointer, data2Length int) (retCode int, ret string, jsonOutLength int) {
+	_data1Length := C.int64_t(data1Length)
+	_data2Length := C.int64_t(data2Length)
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_face_similarity(data1, _data1Length, data2, _data2Length, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return

@@ -158,3 +158,14 @@ func FaceSimilarity(data1 unsafe.Pointer, data1Length int, data2 unsafe.Pointer,
 	ret = C.GoString(_ret)
 	return
 }
+
+// Comtrue_table_ocr
+func TableOCR(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
+	_dataLength := C.int64_t(dataLength)
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_table_ocr(data, _dataLength, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}

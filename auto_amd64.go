@@ -91,11 +91,12 @@ func Identification(data unsafe.Pointer, dataLength int, idType string) (retCode
 }
 
 // Comtrue_identification_extract_text
-func IdentificationExtractText(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
+func IdentificationExtractText(data unsafe.Pointer, dataLength int, modelType int) (retCode int, ret string, jsonOutLength int) {
 	_dataLength := C.int64_t(dataLength)
+	_modelType := C.int64_t(modelType)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_identification_extract_text(data, _dataLength, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_identification_extract_text(data, _dataLength, _modelType, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return

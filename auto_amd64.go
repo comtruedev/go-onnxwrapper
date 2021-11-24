@@ -162,7 +162,7 @@ func FaceSimilarity(data1 unsafe.Pointer, data1Length int, data2 unsafe.Pointer,
 }
 
 // Comtrue_table_ocr
-func TableOcr(data unsafe.Pointer, dataLength int, ocrModelType int) (retCode int, ret string, jsonOutLength int) {
+func TableOCR(data unsafe.Pointer, dataLength int, ocrModelType int) (retCode int, ret string, jsonOutLength int) {
 	_dataLength := C.int64_t(dataLength)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_ocrModelType := C.int64_t(ocrModelType)

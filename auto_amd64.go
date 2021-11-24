@@ -48,12 +48,12 @@ const (
 )
 
 // 통합 모델 파일로부터 초기화
-func InitModels(modelFilePath string, key string) (ret ApiReturn) {
+func InitModels(modelFilePath string, key string, threadNum int) (ret ApiReturn) {
 	_modelFilePath := C.CString(modelFilePath)
 	defer C.free(unsafe.Pointer(_modelFilePath))
 	_key := C.CString(key)
 	defer C.free(unsafe.Pointer(_key))
-	_threadNum := C.int32_t(1)
+	_threadNum := C.int32_t(threadNum)
 	_ret := C.ComtrueInitModels(_modelFilePath, _key, _threadNum)
 	ret = ApiReturn(_ret)
 	return

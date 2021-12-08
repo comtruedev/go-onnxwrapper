@@ -172,3 +172,11 @@ func TableOCR(data unsafe.Pointer, dataLength int, ocrModelType int) (retCode in
 	ret = C.GoString(_ret)
 	return
 }
+
+func InitOCRCharSet(charSetFilePath string) (ret ApiReturn) {
+	_charSetFilePath := C.CString(charSetFilePath)
+	defer C.free(unsafe.Pointer(_charSetFilePath))
+	_ret := C.ComtrueInitOCRCharSet(_charSetFilePath)
+	ret = ApiReturn(_ret)
+	return
+}

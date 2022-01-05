@@ -180,3 +180,18 @@ func InitOCRCharSet(charSetFilePath string) (ret ApiReturn) {
 	ret = ApiReturn(_ret)
 	return
 }
+
+// Comtrue_deidentification
+func Deidentification(data unsafe.Pointer, dataLength int, idType string, didOption int) (retCode int, ret string, jsonOutLength int) {
+	_data := data
+	_dataLength := C.int64_t(dataLength)
+	_idType := C.CString(idType)
+	defer C.free(unsafe.Pointer(_idType))
+	_didOption := C.int64_t(didOption)
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_deidentification(_data, _dataLength, _idType, _didOption, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}

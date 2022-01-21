@@ -197,14 +197,14 @@ func Deidentification(data unsafe.Pointer, dataLength int, idType string, didOpt
 }
 
 // Comtrue_document_info_extraction
-func DocumentInfoExtraction(imageFilePath string, docType int32, option int32) (retCode int, ret string, jsonOutLength int) {
-	_imageFilePath := C.CString(imageFilePath)
-	defer C.free(unsafe.Pointer(_imageFilePath))
+func DocumentInfoExtraction(data unsafe.Pointer, dataLength int, docType int32, option int32) (jsonOutLength int, retCode int, ret string) {
+	_data := data
+	_dataLength := C.int64_t(dataLength)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_option := C.int(option)
 	_docType := C.int(docType)
-	_ret := C.Comtrue_document_info_extraction(_imageFilePath, _jsonOutLength, _retCode, _docType, _option)
+	_option := C.int(option)
+	_ret := C.Comtrue_document_info_extraction(_data, _dataLength, _jsonOutLength, _retCode, _docType, _option)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return

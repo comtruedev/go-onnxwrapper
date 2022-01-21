@@ -197,7 +197,7 @@ func Deidentification(data unsafe.Pointer, dataLength int, idType string, didOpt
 }
 
 // Comtrue_document_info_extraction
-func DocumentInfoExtraction(data unsafe.Pointer, dataLength int, docType int32, option int32) (jsonOutLength int, retCode int, ret string) {
+func DocumentInfoExtraction(data unsafe.Pointer, dataLength int, docType int32, option int32) (retCode int, ret string, jsonOutLength int) {
 	_data := data
 	_dataLength := C.int64_t(dataLength)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))

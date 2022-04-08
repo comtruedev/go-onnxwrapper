@@ -126,12 +126,14 @@ func LicensePlateDetection(data unsafe.Pointer, dataLength int) (retCode int, re
 }
 
 // Comtrue_document_classification
-func DocumentClassification(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
+func DocumentClassification(data unsafe.Pointer, dataLength int, detectOrientationType int32, ocrModelType int32) (retCode int, ret string, jsonOutLength int) {
+	_data := data
 	_dataLength := C.int64_t(dataLength)
+	_detectOrientationType := C.int(detectOrientationType)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ocrType := C.int32_t(DOCUMENT_CLASSIFICATION_OCR_DEFAULT)
-	_ret := C.Comtrue_document_classification(data, _dataLength, _jsonOutLength, _retCode, _ocrType)
+	_ocrModelType := C.int(ocrModelType)
+	_ret := C.Comtrue_document_classification(_data, _dataLength, _detectOrientationType, _jsonOutLength, _retCode, _ocrModelType)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
@@ -150,12 +152,13 @@ func IDLiveness(data unsafe.Pointer, dataLength int, idType int) (retCode int, r
 }
 
 // Comtrue_face_similarity
-func FaceSimilarity(data1 unsafe.Pointer, data1Length int, data2 unsafe.Pointer, data2Length int) (retCode int, ret string, jsonOutLength int) {
+func FaceSimilarity(data1 unsafe.Pointer, data1Length int, data2 unsafe.Pointer, data2Length int, checkType int32) (retCode int, ret string, jsonOutLength int) {
 	_data1Length := C.int64_t(data1Length)
 	_data2Length := C.int64_t(data2Length)
+	_checkType := C.int(checkType)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_face_similarity(data1, _data1Length, data2, _data2Length, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_face_similarity(data1, _data1Length, data2, _data2Length, _checkType, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
@@ -197,14 +200,15 @@ func Deidentification(data unsafe.Pointer, dataLength int, idType string, didOpt
 }
 
 // Comtrue_document_info_extraction
-func DocumentInfoExtraction(data unsafe.Pointer, dataLength int, docType int32, option int32) (retCode int, ret string, jsonOutLength int) {
+func DocumentInfoExtraction(data unsafe.Pointer, dataLength int, docType int32, detectOrientationType int32, option int32) (retCode int, ret string, jsonOutLength int) {
 	_data := data
 	_dataLength := C.int64_t(dataLength)
+	_docType := C.int(docType)
+	_detectOrientationType := C.int(detectOrientationType)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_docType := C.int(docType)
 	_option := C.int(option)
-	_ret := C.Comtrue_document_info_extraction(_data, _dataLength, _jsonOutLength, _retCode, _docType, _option)
+	_ret := C.Comtrue_document_info_extraction(_data, _dataLength, _docType, _detectOrientationType, _jsonOutLength, _retCode, _option)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return

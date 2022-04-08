@@ -68,11 +68,13 @@ func CheckModelInitState() int {
 }
 
 // Comtrue_extract_text
-func ExtractText(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
+func ExtractText(data unsafe.Pointer, dataLength int, detectOrientationType int32) (retCode int, ret string, jsonOutLength int) {
+	_data := data
 	_dataLength := C.int64_t(dataLength)
+	_detectOrientationType := C.int(detectOrientationType)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_extract_text(data, _dataLength, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_extract_text(_data, _dataLength, _detectOrientationType, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return

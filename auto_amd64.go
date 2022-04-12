@@ -81,13 +81,15 @@ func ExtractText(data unsafe.Pointer, dataLength int, detectOrientationType int3
 }
 
 // Comtrue_identification
-func Identification(data unsafe.Pointer, dataLength int, idType string) (retCode int, ret string, jsonOutLength int) {
+func Identification(data unsafe.Pointer, dataLength int, idType string, detectionType int32) (retCode int, ret string, jsonOutLength int) {
+	_data := data
 	_dataLength := C.int64_t(dataLength)
 	_idType := C.CString(idType)
 	defer C.free(unsafe.Pointer(_idType))
+	_detectionType := C.int(detectionType)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_identification(data, _dataLength, _idType, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_identification(_data, _dataLength, _idType, _detectionType, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
@@ -187,15 +189,16 @@ func InitOCRCharSet(charSetFilePath string) (ret ApiReturn) {
 }
 
 // Comtrue_deidentification
-func Deidentification(data unsafe.Pointer, dataLength int, idType string, didOption int) (retCode int, ret string, jsonOutLength int) {
+func Deidentification(data unsafe.Pointer, dataLength int, idType string, didOption int, detectionType int32) (retCode int, ret string, jsonOutLength int) {
 	_data := data
 	_dataLength := C.int64_t(dataLength)
 	_idType := C.CString(idType)
 	defer C.free(unsafe.Pointer(_idType))
 	_didOption := C.int64_t(didOption)
+	_detectionType := C.int(detectionType)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_deidentification(_data, _dataLength, _idType, _didOption, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_deidentification(_data, _dataLength, _idType, _didOption, _detectionType, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return

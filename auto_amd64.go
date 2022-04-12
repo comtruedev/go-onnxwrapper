@@ -215,3 +215,22 @@ func DocumentInfoExtraction(data unsafe.Pointer, dataLength int, docType int32, 
 	ret = C.GoString(_ret)
 	return
 }
+
+// Comtrue_detect_text_with_dbnet_option
+func DetectTextWithDbnetOption(data unsafe.Pointer, dataLength int, detectOrientationType int32, padding int32, maxSideLen int32, boxScoreThresh float32, boxThresh float32, unClipRatio float32, modelType int) (retCode int, ret string, jsonOutLength int) {
+	_data := data
+	_dataLength := C.int64_t(dataLength)
+	_detectOrientationType := C.int(detectOrientationType)
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_padding := C.int(padding)
+	_maxSideLen := C.int(maxSideLen)
+	_boxScoreThresh := C.float(boxScoreThresh)
+	_boxThresh := C.float(boxThresh)
+	_unClipRatio := C.float(unClipRatio)
+	_modelType := C.int64_t(modelType)
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_detect_text_with_dbnet_option(_data, _dataLength, _detectOrientationType, _jsonOutLength, _padding, _maxSideLen, _boxScoreThresh, _boxThresh, _unClipRatio, _modelType, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}

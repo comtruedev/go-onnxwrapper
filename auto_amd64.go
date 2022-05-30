@@ -279,3 +279,16 @@ func FingerprintDetection(data unsafe.Pointer, dataLength int) (retCode int, ret
 	ret = C.GoString(_ret)
 	return
 }
+
+// Comtrue_detect_square
+func DetectSquare(data unsafe.Pointer, dataLength int, type_ int) (retCode int, ret string, jsonOutLength int) {
+	_data := data
+	_dataLength := C.int64_t(dataLength)
+	_type_ := C.int64_t(type_)
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_detect_square(_data, _dataLength, _type_, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}

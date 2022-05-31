@@ -292,3 +292,18 @@ func DetectSquare(data unsafe.Pointer, dataLength int, type_ int) (retCode int, 
 	ret = C.GoString(_ret)
 	return
 }
+
+// Comtrue_identification_ekyc
+func IdentificationEkyc(data unsafe.Pointer, dataLength int, idType string, detectionType int32) (retCode int, ret string, jsonOutLength int) {
+	_data := data
+	_dataLength := C.int64_t(dataLength)
+	_idType := C.CString(idType)
+	defer C.free(unsafe.Pointer(_idType))
+	_detectionType := C.int(detectionType)
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_identification_ekyc(_data, _dataLength, _idType, _detectionType, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}

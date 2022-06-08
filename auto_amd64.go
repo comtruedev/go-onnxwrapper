@@ -309,13 +309,14 @@ func IdentificationEkyc(data unsafe.Pointer, dataLength int, idType string, dete
 }
 
 // Comtrue_detect_identification
-func DetectIdentification(data unsafe.Pointer, dataLength int, type_ int) (retCode int, ret string, jsonOutLength int) {
+func DetectIdentification(data unsafe.Pointer, dataLength int, type_ int, modelType int32) (retCode int, ret string, jsonOutLength int) {
 	_data := data
 	_dataLength := C.int64_t(dataLength)
 	_type_ := C.int64_t(type_)
+	_modelType := C.int(modelType)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_detect_identification(_data, _dataLength, _type_, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_detect_identification(_data, _dataLength, _type_, _modelType, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return

@@ -336,3 +336,12 @@ func FaceDetectionLiveness(data unsafe.Pointer, dataLength int, type_ int, resiz
 	ret = C.GoString(_ret)
 	return
 }
+
+// ComtrueSetMrzParserHost
+func SetMrzParserHost(host string) (ret ApiReturn) {
+	_host := C.CString(host)
+	defer C.free(unsafe.Pointer(_host))
+	_ret := C.ComtrueSetMrzParserHost(_host)
+	ret = ApiReturn(_ret)
+	return
+}

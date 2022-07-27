@@ -322,16 +322,28 @@ func DetectIdentification(data unsafe.Pointer, dataLength int, type_ int, modelT
 	return
 }
 
-// Comtrue_face_detection_liveness
-func FaceDetectionLiveness(data unsafe.Pointer, dataLength int, type_ int, resizeWidth int32, laplacianRatio float32) (retCode int, ret string, jsonOutLength int) {
+// Comtrue_face_detection_active_liveness
+func FaceDetectionActiveLiveness(data unsafe.Pointer, dataLength int, type_ string) (retCode int, ret string, jsonOutLength int) {
+	_data := data
+	_dataLength := C.int64_t(dataLength)
+	_type_ := C.CString(type_)
+	defer C.free(unsafe.Pointer(_type_))
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_face_detection_active_liveness(_data, _dataLength, _type_, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}
+
+// Comtrue_face_detection_passive_liveness
+func FaceDetectionPassiveLiveness(data unsafe.Pointer, dataLength int, type_ int) (retCode int, ret string, jsonOutLength int) {
 	_data := data
 	_dataLength := C.int64_t(dataLength)
 	_type_ := C.int64_t(type_)
-	_resizeWidth := C.int(resizeWidth)
-	_laplacianRatio := C.float(laplacianRatio)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_face_detection_liveness(_data, _dataLength, _type_, _resizeWidth, _laplacianRatio, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_face_detection_passive_liveness(_data, _dataLength, _type_, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return

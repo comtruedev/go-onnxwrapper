@@ -360,12 +360,13 @@ func SetMrzParserHost(host string) (ret ApiReturn) {
 }
 
 // Comtrue_classify_idcard
-func ClassifyIdcard(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
+func ClassifyIdcard(data unsafe.Pointer, dataLength int, checkType int32) (retCode int, ret string, jsonOutLength int) {
 	_data := data
 	_dataLength := C.int64_t(dataLength)
+	_checkType := C.int(checkType)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_classify_idcard(_data, _dataLength, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_classify_idcard(_data, _dataLength, _checkType, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return

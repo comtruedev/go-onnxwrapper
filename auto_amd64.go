@@ -294,15 +294,16 @@ func DetectSquare(data unsafe.Pointer, dataLength int, type_ int) (retCode int, 
 }
 
 // Comtrue_identification_ekyc
-func IdentificationEkyc(data unsafe.Pointer, dataLength int, idType string, detectionType int32) (retCode int, ret string, jsonOutLength int) {
+func IdentificationEkyc(data unsafe.Pointer, dataLength int, idType string, detectionType int32, faceType int32) (retCode int, ret string, jsonOutLength int) {
 	_data := data
 	_dataLength := C.int64_t(dataLength)
 	_idType := C.CString(idType)
 	defer C.free(unsafe.Pointer(_idType))
 	_detectionType := C.int(detectionType)
+	_faceType := C.int(faceType)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_identification_ekyc(_data, _dataLength, _idType, _detectionType, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_identification_ekyc(_data, _dataLength, _idType, _detectionType, _faceType, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
@@ -365,6 +366,18 @@ func ClassifyIdcard(data unsafe.Pointer, dataLength int) (retCode int, ret strin
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
 	_ret := C.Comtrue_classify_idcard(_data, _dataLength, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}
+
+// Comtrue_credit_card_info_extraction
+func CreditCardInfoExtraction(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
+	_data := data
+	_dataLength := C.int64_t(dataLength)
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_credit_card_info_extraction(_data, _dataLength, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return

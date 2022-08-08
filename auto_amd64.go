@@ -383,3 +383,18 @@ func CreditCardInfoExtraction(data unsafe.Pointer, dataLength int) (retCode int,
 	ret = C.GoString(_ret)
 	return
 }
+
+// Comtrue_classify_idcard_and_extract_text
+func ClassifyIdcardAndExtractText(data unsafe.Pointer, dataLength int, checkType int32, detectionType int32, faceType int32) (retCode int, ret string, jsonOutLength int) {
+	_data := data
+	_dataLength := C.int64_t(dataLength)
+	_checkType := C.int(checkType)
+	_detectionType := C.int(detectionType)
+	_faceType := C.int(faceType)
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_classify_idcard_and_extract_text(_data, _dataLength, _checkType, _detectionType, _faceType, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}

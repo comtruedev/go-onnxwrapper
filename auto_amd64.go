@@ -422,3 +422,12 @@ func FaceDetectionEmbedding(data unsafe.Pointer, dataLength int) (retCode int, r
 	ret = C.GoString(_ret)
 	return
 }
+
+// ComtrueInitExtraData
+func InitExtraData(dataFilePath string) (ret ApiReturn) {
+	_dataFilePath := C.CString(dataFilePath)
+	defer C.free(unsafe.Pointer(_dataFilePath))
+	_ret := C.ComtrueInitExtraData(_dataFilePath)
+	ret = ApiReturn(_ret)
+	return
+}

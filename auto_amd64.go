@@ -431,3 +431,17 @@ func InitExtraData(dataFilePath string) (ret ApiReturn) {
 	ret = ApiReturn(_ret)
 	return
 }
+
+// Comtrue_extract_captcha
+func ExtractCaptcha(data unsafe.Pointer, dataLength int, captchaType string) (retCode int, ret string, jsonOutLength int) {
+	_data := data
+	_dataLength := C.int64_t(dataLength)
+	_captchaType := C.CString(captchaType)
+	defer C.free(unsafe.Pointer(_captchaType))
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_extract_captcha(_data, _dataLength, _captchaType, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}

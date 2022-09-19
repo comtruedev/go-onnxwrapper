@@ -447,16 +447,17 @@ func ExtractCaptcha(data unsafe.Pointer, dataLength int, captchaType string) (re
 }
 
 // Comtrue_deidentification_ekyc
-func DeidentificationEkyc(data unsafe.Pointer, dataLength int, idType string, detectionType int32, faceType int32) (retCode int, ret string, jsonOutLength int) {
+func DeidentificationEkyc(data unsafe.Pointer, dataLength int, idType string, didOption int, detectionType int32, faceType int32) (retCode int, ret string, jsonOutLength int) {
 	_data := data
 	_dataLength := C.int64_t(dataLength)
 	_idType := C.CString(idType)
 	defer C.free(unsafe.Pointer(_idType))
+	_didOption := C.int64_t(didOption)
 	_detectionType := C.int(detectionType)
 	_faceType := C.int(faceType)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_deidentification_ekyc(_data, _dataLength, _idType, _detectionType, _faceType, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_deidentification_ekyc(_data, _dataLength, _idType, _didOption, _detectionType, _faceType, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return

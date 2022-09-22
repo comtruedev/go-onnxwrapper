@@ -464,12 +464,12 @@ func DeidentificationEkyc(data unsafe.Pointer, dataLength int, idType string, di
 }
 
 // Comtrue_imwrite
-func Imwrite(data unsafe.Pointer, dataLength int, filepath string) (ret [1]byte) {
+func Imwrite(data unsafe.Pointer, dataLength int, filepath string) (ret bool) {
 	_data := data
 	_dataLength := C.int64_t(dataLength)
 	_filepath := C.CString(filepath)
 	defer C.free(unsafe.Pointer(_filepath))
 	_ret := C.Comtrue_imwrite(_data, _dataLength, _filepath)
-	ret = [1]byte(_ret)
+	ret = bool(_ret)
 	return
 }

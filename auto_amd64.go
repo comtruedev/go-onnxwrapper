@@ -473,3 +473,17 @@ func Imwrite(data unsafe.Pointer, dataLength int, filepath string) (ret bool) {
 	ret = bool(_ret)
 	return
 }
+
+// Comtrue_detect_idcard_liveness
+func DetectIdcardLiveness(data unsafe.Pointer, dataLength int, checkType int32, threshold float32) (retCode int, ret string, jsonOutLength int) {
+	_data := data
+	_dataLength := C.int64_t(dataLength)
+	_checkType := C.int(checkType)
+	_threshold := C.float(threshold)
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_detect_idcard_liveness(_data, _dataLength, _checkType, _threshold, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}

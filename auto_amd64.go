@@ -487,3 +487,17 @@ func DetectIdcardLiveness(data unsafe.Pointer, dataLength int, checkType int32, 
 	ret = C.GoString(_ret)
 	return
 }
+
+// Comtrue_detect_idcard_liveness_analysis
+func DetectIdcardLivenessAnalysis(data unsafe.Pointer, dataLength int, option string) (retCode int, ret string, jsonOutLength int) {
+	_data := data
+	_dataLength := C.int64_t(dataLength)
+	_option := C.CString(option)
+	defer C.free(unsafe.Pointer(_option))
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_detect_idcard_liveness_analysis(_data, _dataLength, _option, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}

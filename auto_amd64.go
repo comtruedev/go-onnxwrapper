@@ -464,15 +464,15 @@ func DeidentificationEkyc(data unsafe.Pointer, dataLength int, idType string, di
 }
 
 // Comtrue_imwrite
-func Imwrite(data unsafe.Pointer, dataLength int, filepath string) (ret bool) {
-	_data := data
-	_dataLength := C.int64_t(dataLength)
-	_filepath := C.CString(filepath)
-	defer C.free(unsafe.Pointer(_filepath))
-	_ret := C.Comtrue_imwrite(_data, _dataLength, _filepath)
-	ret = bool(_ret)
-	return
-}
+// func Imwrite(data unsafe.Pointer, dataLength int, filepath string) (ret bool) {
+// 	_data := data
+// 	_dataLength := C.int64_t(dataLength)
+// 	_filepath := C.CString(filepath)
+// 	defer C.free(unsafe.Pointer(_filepath))
+// 	_ret := C.Comtrue_imwrite(_data, _dataLength, _filepath)
+// 	ret = bool(_ret)
+// 	return
+// }
 
 // Comtrue_detect_idcard_liveness
 func DetectIdcardLiveness(data unsafe.Pointer, dataLength int, checkType int32, threshold float32) (retCode int, ret string, jsonOutLength int) {

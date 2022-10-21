@@ -501,3 +501,28 @@ func DetectIdcardLivenessAnalysis(data unsafe.Pointer, dataLength int, option st
 	ret = C.GoString(_ret)
 	return
 }
+
+// Comtrue_extract_welfare_card_info
+func ExtractWelfareCardInfo(data unsafe.Pointer, dataLength int, faceType int32) (retCode int, ret string, jsonOutLength int) {
+	_data := data
+	_dataLength := C.int64_t(dataLength)
+	_faceType := C.int(faceType)
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_extract_welfare_card_info(_data, _dataLength, _faceType, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}
+
+// Comtrue_extract_usim_info
+func ExtractUsimInfo(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
+	_data := data
+	_dataLength := C.int64_t(dataLength)
+	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
+	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
+	_ret := C.Comtrue_extract_usim_info(_data, _dataLength, _jsonOutLength, _retCode)
+	defer C.free(unsafe.Pointer(_ret))
+	ret = C.GoString(_ret)
+	return
+}

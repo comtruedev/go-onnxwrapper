@@ -350,15 +350,6 @@ func FaceDetectionPassiveLiveness(data unsafe.Pointer, dataLength int, type_ int
 	return
 }
 
-// ComtrueSetMrzParserHost
-func SetMrzParserHost(host string) (ret ApiReturn) {
-	_host := C.CString(host)
-	defer C.free(unsafe.Pointer(_host))
-	_ret := C.ComtrueSetMrzParserHost(_host)
-	ret = ApiReturn(_ret)
-	return
-}
-
 // Comtrue_classify_idcard
 func ClassifyIdcard(data unsafe.Pointer, dataLength int, checkType int32) (retCode int, ret string, jsonOutLength int) {
 	_data := data

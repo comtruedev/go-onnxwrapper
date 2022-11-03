@@ -293,17 +293,18 @@ func DetectSquare(data unsafe.Pointer, dataLength int, type_ int) (retCode int, 
 	return
 }
 
-// Comtrue_identification_ekyc
-func IdentificationEkyc(data unsafe.Pointer, dataLength int, idType string, detectionType int32, faceType int32) (retCode int, ret string, jsonOutLength int) {
+func IdentificationEkyc(data unsafe.Pointer, dataLength int, idType string, detectionType int32, faceType int32, livenessType int32, livenessThreshold float32) (retCode int, ret string, jsonOutLength int) {
 	_data := data
 	_dataLength := C.int64_t(dataLength)
 	_idType := C.CString(idType)
 	defer C.free(unsafe.Pointer(_idType))
 	_detectionType := C.int(detectionType)
 	_faceType := C.int(faceType)
+	_livenessType := C.int(livenessType)
+	_livenessThreshold := C.float(livenessThreshold)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_identification_ekyc(_data, _dataLength, _idType, _detectionType, _faceType, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_identification_ekyc(_data, _dataLength, _idType, _detectionType, _faceType, _livenessType, _livenessThreshold, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
@@ -376,15 +377,16 @@ func CreditCardInfoExtraction(data unsafe.Pointer, dataLength int) (retCode int,
 }
 
 // Comtrue_classify_idcard_and_extract_text
-func ClassifyIdcardAndExtractText(data unsafe.Pointer, dataLength int, checkType int32, detectionType int32, faceType int32) (retCode int, ret string, jsonOutLength int) {
+func ClassifyIdcardAndExtractText(data unsafe.Pointer, dataLength int, detectionType int32, faceType int32, livenessType int32, livenessThreshold float32) (retCode int, ret string, jsonOutLength int) {
 	_data := data
 	_dataLength := C.int64_t(dataLength)
-	_checkType := C.int(checkType)
 	_detectionType := C.int(detectionType)
 	_faceType := C.int(faceType)
+	_livenessType := C.int(livenessType)
+	_livenessThreshold := C.float(livenessThreshold)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_classify_idcard_and_extract_text(_data, _dataLength, _checkType, _detectionType, _faceType, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_classify_idcard_and_extract_text(_data, _dataLength, _detectionType, _faceType, _livenessType, _livenessThreshold, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
@@ -466,14 +468,13 @@ func DeidentificationEkyc(data unsafe.Pointer, dataLength int, idType string, di
 // }
 
 // Comtrue_detect_idcard_liveness
-func DetectIdcardLiveness(data unsafe.Pointer, dataLength int, checkType int32, threshold float32) (retCode int, ret string, jsonOutLength int) {
+func DetectIdcardLiveness(data unsafe.Pointer, dataLength int, threshold float32) (retCode int, ret string, jsonOutLength int) {
 	_data := data
 	_dataLength := C.int64_t(dataLength)
-	_checkType := C.int(checkType)
 	_threshold := C.float(threshold)
 	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_detect_idcard_liveness(_data, _dataLength, _checkType, _threshold, _jsonOutLength, _retCode)
+	_ret := C.Comtrue_detect_idcard_liveness(_data, _dataLength, _threshold, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return

@@ -95,17 +95,6 @@ func Identification(data unsafe.Pointer, dataLength int, idType string, detectio
 	return
 }
 
-// Comtrue_identification_extract_text
-func IdentificationExtractText(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
-	_dataLength := C.int64_t(dataLength)
-	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
-	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_identification_extract_text(data, _dataLength, _jsonOutLength, _retCode)
-	defer C.free(unsafe.Pointer(_ret))
-	ret = C.GoString(_ret)
-	return
-}
-
 // Comtrue_face_detection
 func FaceDetection(data unsafe.Pointer, dataLength int, modelType int) (retCode int, ret string, jsonOutLength int) {
 	_dataLength := C.int64_t(dataLength)
@@ -138,18 +127,6 @@ func DocumentClassification(data unsafe.Pointer, dataLength int, detectOrientati
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
 	_ocrModelType := C.int(ocrModelType)
 	_ret := C.Comtrue_document_classification(_data, _dataLength, _detectOrientationType, _jsonOutLength, _retCode, _ocrModelType)
-	defer C.free(unsafe.Pointer(_ret))
-	ret = C.GoString(_ret)
-	return
-}
-
-// Comtrue_id_liveness
-func IDLiveness(data unsafe.Pointer, dataLength int, idType int) (retCode int, ret string, jsonOutLength int) {
-	_dataLength := C.int64_t(dataLength)
-	_idType := C.int32_t(idType)
-	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
-	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_id_liveness(data, _dataLength, _idType, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
@@ -251,18 +228,6 @@ func ExtractTextWithDbnetOption(data unsafe.Pointer, dataLength int, detectOrien
 	_unClipRatio := C.float(unClipRatio)
 	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
 	_ret := C.Comtrue_extract_text_with_dbnet_option(_data, _dataLength, _detectOrientationType, _jsonOutLength, _padding, _maxSideLen, _boxScoreThresh, _boxThresh, _unClipRatio, _retCode)
-	defer C.free(unsafe.Pointer(_ret))
-	ret = C.GoString(_ret)
-	return
-}
-
-// Comtrue_receipt_info_extraction
-func ReceiptInfoExtraction(data unsafe.Pointer, dataLength int) (retCode int, ret string, jsonOutLength int) {
-	_data := data
-	_dataLength := C.int64_t(dataLength)
-	_jsonOutLength := (*C.int64_t)(unsafe.Pointer(&jsonOutLength))
-	_retCode := (*C.int64_t)(unsafe.Pointer(&retCode))
-	_ret := C.Comtrue_receipt_info_extraction(_data, _dataLength, _jsonOutLength, _retCode)
 	defer C.free(unsafe.Pointer(_ret))
 	ret = C.GoString(_ret)
 	return
